@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  smokeping-backend:
+    build:
+      context: './smokeping-backend'
+      args:
+        smokeping_ver: ${SMOKEPING_VER}
+    image: 'smokeping-backend'
+    networks:
+      - 'smokeping'
+    volumes:
+      - './config/smokeping.config:/opt/smokeping/etc/smokeping.config'
+      - './data:/app'
+    restart: 'always'
+
+  smokeping-fcgi:
+    build:
+      context: './smokeping-fcgi'
+      args:
+        smokeping_ver: ${SMOKEPING_VER}
+    image: 'smokeping-fcgi'
+    networks:
+      - 'smokeping'
+    volumes:
+      - './config/smokeping.config:/opt/smokeping/etc/smokeping.config'
+      - './config/smokeping.fcgi:/opt/smokeping/htdocs/smokeping.fcgi'
+      - './data:/app'
+    restart: 'always'
+
+  smokeping-frontend:
+    build:
+      context: './smokeping-frontend'
+      args:
+        smokeping_ver: ${SMOKEPING_VER}
+    image: 'smokeping-frontend'
+    networks:
+      - 'smokeping'
+    ports:
+      - 80:80
+    volumes:
+      - './config/nginx.default.conf:/etc/nginx/conf.d/default.conf'
+      - './data:/app'
+    restart: 'always'
+    depends_on:
+      - 'smokeping-fcgi'
+
+networks:
+  smokeping:
+    driver: 'bridge'

@@ -1,1 +1,8 @@
 .DS_Store
+
+#  local configuration
+/config/smokeping.config
+
+#  rrds and frontend cache
+/data/smokeping/data/**
+/data/smokeping/imgcache/**
