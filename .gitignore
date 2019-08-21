@@ -6,3 +6,6 @@
 #  rrds and frontend cache
 /data/smokeping/data/**
 /data/smokeping/imgcache/**
+
+#  initialize data structure
+!**/.gitkeep
