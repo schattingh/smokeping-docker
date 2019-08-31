@@ -2,6 +2,7 @@
 
 #  local configuration
 /config/smokeping.config
+/config/htpasswd.users
 
 #  rrds and frontend cache
 /data/smokeping/data/**
